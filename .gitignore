@@ -1,0 +1,19 @@
+.venv
+.venv/*
+static/*
+static/
+instance/
+instance/*
+instance/*.sqlite
+/instance/*.db
+/instance/*.sqlite
+
+# Ignore migrations folder and its contents
+# /migrations/
+# /migrations/*
+
+# Ignore __pycache__ folders
+__pycache__/
+*.pyc
+env 
+.env

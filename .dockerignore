@@ -1,0 +1,24 @@
+.venv
+.venv/*
+.env
+*.pem
+*.key
+
+# Ignore Python cache and virtual environments
+__pycache__/
+*.pyc
+*.pyo
+venv/
+env/
+
+
+.DS_Store
+Thumbs.db
+
+# Ignore logs and compiled files
+logs/
+*.log
+
+#instance
+instance/
+instance/*
