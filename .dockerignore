@@ -22,3 +22,5 @@ logs/
 #instance
 instance/
 instance/*
+
+static/assets/
