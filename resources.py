@@ -475,7 +475,10 @@ class ProductResource(Resource):
             product = Product.query.filter_by(id=id).first()
             if not product:
                 return make_response(jsonify({"msg": "Product not found"}), 404)
-            return make_response(jsonify(product.to_dict()), 200)
+            product_data = product.to_dict()
+            product_data["images"] = [image.url for image in product.images]
+
+            return make_response(jsonify(product_data), 200)
 
     def post(self):
         data = request.get_json()
@@ -593,7 +596,7 @@ class ProductRoute(Resource):
                     "." not in filename
                     or filename.split(".")[-1].lower() not in allowed_extensions
                 ):
-                    return {"msg": "Invalid file type"}, 400
+                    return {"msg": "File type not allowed"}, 400
 
                 # Generate unique filename
                 unique_filename = f"{uuid.uuid4().hex[:6]}_{filename}"
@@ -605,8 +608,11 @@ class ProductRoute(Resource):
                 image.save(save_path)
 
                 # Construct URL using configurable domain (if needed)
-                base_url = request.host_url.rstrip("/")
-                full_url = urljoin(base_url, f"{upload_dir}/{unique_filename}")
+                # base_url = request.host_url.rstrip("/") # to revisit
+                server_public_ip_url = "http://54.210.214.53"  # temporary
+                full_url = urljoin(
+                    server_public_ip_url, f"{upload_dir}/{unique_filename}"
+                )
                 saved_images.append({"url": full_url, "is_primary": idx == 0})
             # check for branch
             existing_branch = Category.query.filter_by(
