@@ -242,7 +242,7 @@ class CategoryResource(Resource):
                 name=data["name"],
                 slug=data["slug"],
                 description=data.get("description"),
-                parent_id=existing_category.parent_id,
+                parent_id=existing_category.parent_id if parent_id else None,
                 image_url=data.get("image_url"),
             )
             db.session.add(category)
